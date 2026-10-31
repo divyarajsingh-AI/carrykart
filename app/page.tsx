@@ -285,7 +285,7 @@ export default function Home() {
           <p>
             © 2026 CarryKart. An early-stage concept.
           </p>
-          <p>Built by Divyaraj Singh Bhadauria.</p>
+          <p>Built by KAVISH THE GREAT.</p>
         </div>
       </footer>
     </main>
