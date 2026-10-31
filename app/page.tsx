@@ -113,12 +113,13 @@ export default function Home() {
               I need an item <span aria-hidden="true">→</span>
             </a>
             <a
-              href="#routes"
+              href="/travel"
               className="rounded-xl border border-white/15 bg-white/5 px-6 py-4 text-center font-semibold transition hover:border-white/30 hover:bg-white/10"
             >
               I&apos;m travelling <span aria-hidden="true">↗</span>
             </a>
           </div>
+
 
           <div className="mt-10 flex flex-wrap gap-x-6 gap-y-3 text-sm text-slate-400">
             <span>✦ Built around shared journeys</span>
