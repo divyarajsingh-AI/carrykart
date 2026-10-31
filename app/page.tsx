@@ -283,7 +283,7 @@ export default function Home() {
       <footer className="border-t border-white/10">
         <div className="mx-auto flex max-w-7xl flex-col gap-4 px-5 py-8 text-sm text-slate-500 sm:flex-row sm:items-center sm:justify-between sm:px-8">
           <p>
-            © {new Date().getFullYear()} CarryKart. An early-stage concept.
+            © 2026 CarryKart. An early-stage concept.
           </p>
           <p>Built step by step. Designed for better connections.</p>
         </div>
