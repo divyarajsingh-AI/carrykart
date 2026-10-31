@@ -107,7 +107,7 @@ export default function Home() {
             className="mt-9 flex flex-col gap-4 sm:flex-row"
           >
             <a
-              href="#how-it-works"
+              href="/request"
               className="rounded-xl bg-orange-400 px-6 py-4 text-center font-bold text-slate-950 transition hover:-translate-y-0.5 hover:bg-orange-300"
             >
               I need an item <span aria-hidden="true">→</span>
