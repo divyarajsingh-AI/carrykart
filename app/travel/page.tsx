@@ -1,10 +1,11 @@
 
 "use client";
 
-import { useState } from "react";
+import { useEffect, useState } from "react";
 
 export default function TravelPage() {
   const [message, setMessage] = useState("");
+  const [today, setToday] = useState("");
   const [form, setForm] = useState({
     name: "",
     from: "",
@@ -13,6 +14,14 @@ export default function TravelPage() {
     space: "Small bag",
     details: "",
   });
+
+  useEffect(() => {
+    const now = new Date();
+    const year = now.getFullYear();
+    const month = String(now.getMonth() + 1).padStart(2, "0");
+    const day = String(now.getDate()).padStart(2, "0");
+    setToday(`${year}-${month}-${day}`);
+  }, []);
 
   function handleChange(
     e: React.ChangeEvent<
@@ -133,7 +142,7 @@ export default function TravelPage() {
                 id="date"
                 name="date"
                 type="date"
-                min={new Date().toLocaleDateString("en-CA")}
+                min={today || undefined}
                 value={form.date}
                 onChange={handleChange}
                 className={inputClass}
