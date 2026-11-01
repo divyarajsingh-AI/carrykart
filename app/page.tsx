@@ -322,7 +322,7 @@ export default function Home() {
           <p className="text-xs text-zinc-600">
             © 2026 CarryKart. An early-stage concept.
           </p>
-          <p className="text-xs text-zinc-600">Built by Angel Priyaaaa.</p>
+          <p className="text-xs text-zinc-600">By Divyaraj Singh Bhadauria.</p>
         </div>
       </footer>
     </main>
