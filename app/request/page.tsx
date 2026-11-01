@@ -3,6 +3,7 @@
 
 import { useState } from "react";
 import Link from "next/link";
+import { supabase } from "../../lib/supabase";
 
 export default function RequestPage() {
   const [itemName, setItemName] = useState("");
@@ -12,37 +13,42 @@ export default function RequestPage() {
   const [budget, setBudget] = useState("");
   const [details, setDetails] = useState("");
   const [message, setMessage] = useState("");
+  const [isSubmitting, setIsSubmitting] = useState(false);
 
-  function handleSubmit(event: React.FormEvent<HTMLFormElement>) {
+  async function handleSubmit(event: React.FormEvent<HTMLFormElement>) {
     event.preventDefault();
+    setMessage("");
+    setIsSubmitting(true);
 
-    const request = {
-      id: crypto.randomUUID(),
-      itemName,
-      itemUrl,
-      pickupCity,
-      deliveryCity,
-      budget,
-      details,
-      createdAt: new Date().toISOString(),
-    };
+    try {
+      const { error } = await supabase.from("buyer_requests").insert({
+        item_name: itemName.trim(),
+        item_url: itemUrl.trim() || null,
+        pickup_city: pickupCity.trim(),
+        delivery_city: deliveryCity.trim(),
+        budget: Number(budget),
+        details: details.trim() || null,
+      });
 
-    const saved = JSON.parse(
-      localStorage.getItem("carrykart-requests") || "[]"
-    );
+      if (error) {
+        console.error("Supabase insert error:", error.message);
+        setMessage(`Could not save request: ${error.message}`);
+        return;
+      }
 
-    localStorage.setItem(
-      "carrykart-requests",
-      JSON.stringify([...saved, request])
-    );
-
-    setMessage("Your demo request was saved in this browser!");
-    setItemName("");
-    setItemUrl("");
-    setPickupCity("");
-    setDeliveryCity("");
-    setBudget("");
-    setDetails("");
+      setMessage("Success! Your request has been shared with CarryKart.");
+      setItemName("");
+      setItemUrl("");
+      setPickupCity("");
+      setDeliveryCity("");
+      setBudget("");
+      setDetails("");
+    } catch (error) {
+      console.error("Request submission failed:", error);
+      setMessage("Something went wrong. Please try again.");
+    } finally {
+      setIsSubmitting(false);
+    }
   }
 
   return (
@@ -57,7 +63,7 @@ export default function RequestPage() {
 
         <div className="mt-8 rounded-3xl border border-white/10 bg-white/[0.04] p-6 sm:p-10">
           <p className="text-sm font-semibold uppercase tracking-[0.2em] text-orange-400">
-            Buyer request · Demo
+            Buyer request
           </p>
 
           <h1 className="mt-3 text-3xl font-bold sm:text-4xl">
@@ -65,9 +71,9 @@ export default function RequestPage() {
           </h1>
 
           <p className="mt-3 leading-7 text-slate-400">
-            Tell us what you need and where it should go. This prototype
-            saves your request only in this browser; it does not contact a
-            traveller or arrange a delivery.
+            Tell us what you need and where it should go. Your request will
+            be saved to CarryKart&apos;s shared database. This does not
+            automatically arrange a delivery.
           </p>
 
           <form onSubmit={handleSubmit} className="mt-8 space-y-5">
@@ -78,6 +84,7 @@ export default function RequestPage() {
               <input
                 id="itemName"
                 required
+                maxLength={150}
                 value={itemName}
                 onChange={(e) => setItemName(e.target.value)}
                 placeholder="e.g. A book or a pair of shoes"
@@ -92,6 +99,7 @@ export default function RequestPage() {
               <input
                 id="itemUrl"
                 type="url"
+                maxLength={2000}
                 value={itemUrl}
                 onChange={(e) => setItemUrl(e.target.value)}
                 placeholder="https://example.com/product"
@@ -107,6 +115,7 @@ export default function RequestPage() {
                 <input
                   id="pickupCity"
                   required
+                  maxLength={100}
                   value={pickupCity}
                   onChange={(e) => setPickupCity(e.target.value)}
                   placeholder="e.g. Jaipur"
@@ -121,6 +130,7 @@ export default function RequestPage() {
                 <input
                   id="deliveryCity"
                   required
+                  maxLength={100}
                   value={deliveryCity}
                   onChange={(e) => setDeliveryCity(e.target.value)}
                   placeholder="e.g. Delhi"
@@ -138,6 +148,7 @@ export default function RequestPage() {
                 required
                 type="number"
                 min="1"
+                max="1000000000"
                 step="1"
                 value={budget}
                 onChange={(e) => setBudget(e.target.value)}
@@ -153,6 +164,7 @@ export default function RequestPage() {
               <textarea
                 id="details"
                 rows={4}
+                maxLength={2000}
                 value={details}
                 onChange={(e) => setDetails(e.target.value)}
                 placeholder="Describe the item or any special requirements."
@@ -162,22 +174,31 @@ export default function RequestPage() {
 
             <button
               type="submit"
-              className="w-full rounded-xl bg-orange-500 px-5 py-3.5 font-semibold text-slate-950 transition hover:bg-orange-400"
+              disabled={isSubmitting}
+              className="w-full rounded-xl bg-orange-500 px-5 py-3.5 font-semibold text-slate-950 transition hover:bg-orange-400 disabled:cursor-not-allowed disabled:opacity-60"
             >
-              Save demo request
+              {isSubmitting ? "Saving request..." : "Submit request"}
             </button>
 
             {message && (
-              <p role="status" className="rounded-xl bg-emerald-500/10 p-4 text-emerald-300">
+              <p
+                role="status"
+                aria-live="polite"
+                className={`break-words rounded-xl p-4 ${
+                  message.startsWith("Success!")
+                    ? "bg-emerald-500/10 text-emerald-300"
+                    : "bg-red-500/10 text-red-300"
+                }`}
+              >
                 {message}
               </p>
             )}
           </form>
 
           <p className="mt-6 text-xs leading-5 text-slate-500">
-            Demo only. Do not enter sensitive personal information. Requests
-            are stored locally in this browser and are not shared with other
-            users.
+            Demo marketplace. Submitted listings may be visible to other
+            users. Do not enter sensitive personal information. Submitting
+            a request does not guarantee delivery.
           </p>
         </div>
       </div>

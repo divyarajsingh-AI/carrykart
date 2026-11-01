@@ -2,10 +2,13 @@
 "use client";
 
 import { useEffect, useState } from "react";
+import { supabase } from "../../lib/supabase";
 
 export default function TravelPage() {
   const [message, setMessage] = useState("");
+  const [isSubmitting, setIsSubmitting] = useState(false);
   const [today, setToday] = useState("");
+
   const [form, setForm] = useState({
     name: "",
     from: "",
@@ -28,32 +31,53 @@ export default function TravelPage() {
       HTMLInputElement | HTMLSelectElement | HTMLTextAreaElement
     >
   ) {
-    setForm({ ...form, [e.target.name]: e.target.value });
+    setForm((previous) => ({
+      ...previous,
+      [e.target.name]: e.target.value,
+    }));
   }
 
-  function handleSubmit(e: React.FormEvent<HTMLFormElement>) {
+  async function handleSubmit(e: React.FormEvent<HTMLFormElement>) {
     e.preventDefault();
+    setMessage("");
+    setIsSubmitting(true);
 
-    const saved = localStorage.getItem("carrykart-travelers");
-    const travelers = saved ? JSON.parse(saved) : [];
+    try {
+      const { error } = await supabase.from("traveller_routes").insert({
+        origin_city: form.from.trim(),
+        destination_city: form.to.trim(),
+        travel_date: form.date,
+        available_space: form.space,
+        details: [
+          `Traveller name: ${form.name.trim()}`,
+          form.details.trim(),
+        ]
+          .filter(Boolean)
+          .join("\n"),
+      });
 
-    travelers.push({
-      ...form,
-      id: Date.now(),
-      createdAt: new Date().toISOString(),
-    });
+      if (error) {
+        console.error("Supabase insert error:", error.message);
+        setMessage(`Could not save travel details: ${error.message}`);
+        return;
+      }
 
-    localStorage.setItem("carrykart-travelers", JSON.stringify(travelers));
+      setMessage("Success! Your travel route has been shared with CarryKart.");
 
-    setMessage("Your travel details have been saved successfully!");
-    setForm({
-      name: "",
-      from: "",
-      to: "",
-      date: "",
-      space: "Small bag",
-      details: "",
-    });
+      setForm({
+        name: "",
+        from: "",
+        to: "",
+        date: "",
+        space: "Small bag",
+        details: "",
+      });
+    } catch (error) {
+      console.error("Travel submission failed:", error);
+      setMessage("Something went wrong. Please try again.");
+    } finally {
+      setIsSubmitting(false);
+    }
   }
 
   const inputClass =
@@ -80,7 +104,8 @@ export default function TravelPage() {
 
           <p className="mt-3 leading-7 text-slate-300">
             Tell us where you are travelling and how much extra space you
-            have. Help connect people with items they need.
+            have. Your route will be saved to CarryKart&apos;s shared
+            database. This does not automatically arrange a delivery.
           </p>
 
           <form onSubmit={handleSubmit} className="mt-8 space-y-5">
@@ -189,15 +214,21 @@ export default function TravelPage() {
 
             <button
               type="submit"
-              className="w-full rounded-xl bg-orange-400 px-6 py-4 font-bold text-slate-950 transition hover:bg-orange-300"
+              disabled={isSubmitting}
+              className="w-full rounded-xl bg-orange-400 px-6 py-4 font-bold text-slate-950 transition hover:bg-orange-300 disabled:cursor-not-allowed disabled:opacity-60"
             >
-              Save travel details →
+              {isSubmitting ? "Saving travel details..." : "Share travel route →"}
             </button>
 
             {message && (
               <p
                 role="status"
-                className="rounded-xl border border-green-400/30 bg-green-400/10 p-4 text-green-300"
+                aria-live="polite"
+                className={`break-words rounded-xl border p-4 ${
+                  message.startsWith("Success!")
+                    ? "border-green-400/30 bg-green-400/10 text-green-300"
+                    : "border-red-400/30 bg-red-400/10 text-red-300"
+                }`}
               >
                 {message}
               </p>
@@ -205,9 +236,9 @@ export default function TravelPage() {
           </form>
 
           <p className="mt-6 text-xs leading-5 text-slate-400">
-            Demo only: details are stored in this browser, not shared with
-            other users. Do not enter sensitive personal information. This
-            form does not arrange or confirm any delivery.
+            Demo marketplace. Submitted routes may be visible to other users.
+            Do not enter sensitive personal information. This form does not
+            arrange or confirm any delivery.
           </p>
         </div>
       </div>
