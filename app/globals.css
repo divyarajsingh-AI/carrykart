@@ -97,3 +97,171 @@ body::before {
     transition-duration: 0.01ms !important;
   }
 }
+
+/* CARRYKART PREMIUM ANIMATIONS */
+
+html {
+  scroll-behavior: smooth;
+}
+
+::selection {
+  background: #ff713b;
+  color: #080808;
+}
+
+@keyframes ck-orbit {
+  from {
+    transform: rotate(0deg);
+  }
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+@keyframes ck-pulse {
+  0%, 100% {
+    opacity: 0.45;
+    transform: scale(0.96);
+  }
+  50% {
+    opacity: 1;
+    transform: scale(1.04);
+  }
+}
+
+@keyframes ck-float {
+  0%, 100% {
+    transform: translateY(0);
+  }
+  50% {
+    transform: translateY(-10px);
+  }
+}
+
+.ck-orbit {
+  animation: ck-orbit 35s linear infinite;
+}
+
+.ck-orbit-reverse {
+  animation: ck-orbit 45s linear infinite reverse;
+}
+
+.ck-pulse {
+  animation: ck-pulse 4s ease-in-out infinite;
+}
+
+.ck-float {
+  animation: ck-float 5s ease-in-out infinite;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    scroll-behavior: auto !important;
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+  }
+}
+
+/* =================================
+   CARRYKART — ROYAL VIOLET SYSTEM
+================================= */
+
+html {
+  scroll-behavior: smooth;
+}
+
+::selection {
+  background: #A78BFA;
+  color: #0B0714;
+}
+
+/* Orbital motion */
+@keyframes royal-orbit {
+  from {
+    transform: rotate(0deg);
+  }
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+@keyframes royal-orbit-reverse {
+  from {
+    transform: rotate(360deg);
+  }
+  to {
+    transform: rotate(0deg);
+  }
+}
+
+/* Soft ambient glow */
+@keyframes royal-glow {
+  0%, 100% {
+    opacity: 0.45;
+    transform: scale(0.96);
+  }
+  50% {
+    opacity: 1;
+    transform: scale(1.04);
+  }
+}
+
+.orbit-ring {
+  animation: royal-orbit 8s linear infinite;
+  transform-origin: center;
+}
+
+.orbit-ring-reverse {
+  animation: royal-orbit-reverse 12s linear infinite;
+  transform-origin: center;
+}
+
+/* Accessibility: respect reduced-motion settings */
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    scroll-behavior: auto !important;
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+  }
+}
+/* FLOATING DESTINATION CARDS */
+
+@keyframes carrykart-float-up {
+  0% {
+    transform: translate3d(0, 0, 0);
+  }
+  50% {
+    transform: translate3d(0, -18px, 0);
+  }
+  100% {
+    transform: translate3d(0, 0, 0);
+  }
+}
+
+@keyframes carrykart-float-down {
+  0% {
+    transform: translate3d(0, 0, 0);
+  }
+  50% {
+    transform: translate3d(0, 16px, 0);
+  }
+  100% {
+    transform: translate3d(0, 0, 0);
+  }
+}
+
+.destination-float {
+  animation: carrykart-float-up 3s ease-in-out infinite !important;
+  will-change: transform;
+}
+
+.destination-float-reverse {
+  animation: carrykart-float-down 4s ease-in-out infinite !important;
+  will-change: transform;
+}
