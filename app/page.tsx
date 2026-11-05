@@ -8,194 +8,189 @@ const steps = [
   },
   {
     number: "02",
-    title: "Match with a traveller",
+    title: "Connect with a traveller",
     description:
-      "Find a traveller already heading your way and review the delivery offer.",
+      "Find a traveller already heading towards your destination who can carry your item.",
   },
   {
     number: "03",
-    title: "Coordinate your delivery",
+    title: "Get your item delivered",
     description:
-      "Agree on the details and arrange a convenient handover.",
+      "Coordinate the handoff, confirm the details, and receive your item.",
   },
 ];
 
 const routes = [
-  { from: "Jaipur", to: "Delhi", tag: "POPULAR ROUTE", color: "bg-orange-500" },
-  { from: "Mumbai", to: "Pune", tag: "WEEKEND TRIPS", color: "bg-orange-400" },
-  { from: "Bengaluru", to: "Hyderabad", tag: "CITY CONNECTIONS", color: "bg-orange-300" },
+  {
+    from: "Delhi",
+    to: "Jaipur",
+    tag: "POPULAR ROUTE",
+    color: "bg-orange-400",
+  },
+  {
+    from: "Mumbai",
+    to: "Pune",
+    tag: "SHORT DISTANCE",
+    color: "bg-emerald-400",
+  },
+  {
+    from: "Bengaluru",
+    to: "Chennai",
+    tag: "CITY CONNECT",
+    color: "bg-sky-400",
+  },
 ];
 
 export default function Home() {
   return (
-    <main className="min-h-screen overflow-hidden bg-[#09090b] text-white">
+    <main className="min-h-screen overflow-hidden bg-[#090909] text-white">
       {/* Navigation */}
-      <header className="sticky top-0 z-50 border-b border-white/[0.08] bg-[#09090b]/85 backdrop-blur-xl">
-        <nav className="mx-auto flex max-w-7xl items-center justify-between px-5 py-4 sm:px-8">
-          <a href="#home" className="group flex items-center gap-3">
-            <span className="flex h-11 w-11 items-center justify-center rounded-xl bg-[#ff6a00] text-2xl font-black text-black shadow-[0_0_25px_rgba(255,106,0,0.3)] transition duration-300 group-hover:rotate-6 group-hover:scale-105">
-              C
-            </span>
-            <span className="text-xl font-black tracking-tight sm:text-2xl">
-              Carry<span className="text-[#ff6a00]">Kart</span>
-              <span className="ml-2 hidden text-[9px] font-bold tracking-[0.25em] text-zinc-500 sm:inline">
-                NEXT GEN
-              </span>
-            </span>
+      <nav className="sticky top-0 z-50 border-b border-white/10 bg-[#090909]/90 backdrop-blur-xl">
+        <div className="mx-auto flex max-w-7xl items-center justify-between px-6 py-5">
+          <a href="/" className="text-2xl font-black tracking-tight">
+            Carry<span className="text-orange-400">Kart</span>
+            <span className="text-orange-400">.</span>
           </a>
 
-          <div className="hidden items-center gap-8 text-sm font-medium text-zinc-400 md:flex">
-            <a className="transition hover:text-[#ff6a00]" href="#how-it-works">
+          <div className="hidden items-center gap-8 text-sm font-medium text-gray-400 md:flex">
+            <a href="#how-it-works" className="transition hover:text-orange-400">
               How it works
             </a>
-            <a className="transition hover:text-[#ff6a00]" href="/travel">
+            <a href="#routes" className="transition hover:text-orange-400">
               Explore routes
             </a>
-            <a className="transition hover:text-[#ff6a00]" href="#about">
-              Our vision
+            <a href="#about" className="transition hover:text-orange-400">
+              About us
             </a>
           </div>
 
-          <a
-            href="#get-started"
-            className="rounded-full bg-[#ff6a00] px-4 py-2.5 text-sm font-extrabold text-black transition duration-300 hover:-translate-y-0.5 hover:bg-orange-400 hover:shadow-[0_0_28px_rgba(255,106,0,0.35)] sm:px-5"
-          >
-            Get started <span aria-hidden="true">↗</span>
-          </a>
-        </nav>
-      </header>
-
-      {/* Hero */}
-      <section
-        id="home"
-        className="relative mx-auto grid max-w-7xl items-center gap-14 px-5 py-20 sm:px-8 sm:py-24 lg:grid-cols-2 lg:py-32"
-      >
-        <div className="pointer-events-none absolute -left-48 top-0 h-[450px] w-[450px] rounded-full bg-orange-600/[0.12] blur-[120px]" />
-        <div className="pointer-events-none absolute right-0 top-20 h-64 w-64 rounded-full bg-orange-500/[0.06] blur-[100px]" />
-
-        <div className="relative z-10 animate-cinematic-in">
-          <div className="mb-8 inline-flex items-center gap-3 rounded-full border border-orange-500/25 bg-orange-500/[0.07] px-4 py-2.5 text-xs font-bold tracking-wide text-orange-300 sm:text-sm">
-            <span className="relative flex h-2.5 w-2.5">
-              <span className="absolute inline-flex h-full w-full animate-ping rounded-full bg-orange-400 opacity-60" />
-              <span className="relative inline-flex h-2.5 w-2.5 rounded-full bg-[#ff6a00]" />
-            </span>
-            A SMARTER WAY TO MOVE THINGS
-          </div>
-
-          <h1 className="max-w-3xl text-5xl leading-[1.05] font-black tracking-[-0.055em] sm:text-6xl lg:text-7xl xl:text-[5.4rem]">
-            Your next delivery might be{" "}
-            <span className="neon-text">on someone&apos;s way.</span>
-          </h1>
-
-          <p className="mt-7 max-w-xl text-base leading-8 text-zinc-400 sm:text-lg">
-            A new way to connect people who need items with travellers already
-            heading in the right direction. Turn everyday journeys into
-            meaningful connections.
-          </p>
-
-          <div id="get-started" className="mt-9 flex flex-col gap-4 sm:flex-row">
-            <a
-              href="/request"
-              className="neon-glow group inline-flex items-center justify-center gap-3 rounded-xl bg-[#ff6a00] px-7 py-4 font-extrabold text-black transition duration-300 hover:-translate-y-1 hover:bg-orange-400 hover:shadow-[0_0_35px_rgba(255,106,0,0.4)]"
-            >
-              I need an item
-              <span className="transition-transform group-hover:translate-x-1">→</span>
-            </a>
-
+          <div className="flex items-center gap-3">
             <a
               href="/travel"
-              className="group inline-flex items-center justify-center gap-3 rounded-xl border border-white/15 bg-white/[0.03] px-7 py-4 font-bold text-white transition duration-300 hover:-translate-y-1 hover:border-orange-500/50 hover:bg-orange-500/[0.06]"
+              className="hidden rounded-full border border-white/15 px-5 py-2.5 text-sm font-semibold transition hover:border-orange-400 hover:text-orange-400 sm:block"
             >
-              I&apos;m travelling
-              <span className="text-orange-400 transition-transform group-hover:translate-x-1 group-hover:-translate-y-1">
-                ↗
-              </span>
+              Become a traveller
+            </a>
+            <a
+              href="/request"
+              className="rounded-full bg-orange-400 px-5 py-2.5 text-sm font-bold text-black transition hover:bg-orange-300"
+            >
+              Get started <span aria-hidden="true">→</span>
             </a>
           </div>
-
-          <div className="mt-9 flex flex-wrap gap-x-6 gap-y-3 text-xs font-medium text-zinc-500 sm:text-sm">
-            <span>✦ Community-powered concept</span>
-            <span>✦ Built around shared journeys</span>
-          </div>
         </div>
+      </nav>
 
-        {/* Futuristic journey card */}
-        <div className="relative mx-auto w-full max-w-lg animate-cinematic-in [animation-delay:180ms]">
-          <div className="absolute -inset-4 rounded-[2rem] bg-orange-500/[0.12] blur-3xl" />
+      {/* Hero */}
+      <section className="relative mx-auto max-w-7xl px-6 pb-24 pt-24 md:pb-32 md:pt-32">
+        <div className="pointer-events-none absolute right-0 top-10 -z-0 h-96 w-96 rounded-full bg-orange-500/10 blur-[120px]" />
 
-          <div className="relative overflow-hidden rounded-[2rem] border border-white/10 bg-[#111114]/95 p-5 shadow-2xl sm:p-7">
-            <div className="pointer-events-none absolute inset-0 bg-gradient-to-br from-orange-500/[0.08] via-transparent to-transparent" />
+        <div className="relative z-10 grid items-center gap-16 md:grid-cols-2">
+          <div>
+            <div className="mb-8 inline-flex items-center gap-2 rounded-full border border-orange-400/30 bg-orange-400/10 px-4 py-2 text-xs font-bold tracking-widest text-orange-300">
+              <span className="h-2 w-2 rounded-full bg-orange-400" />
+              A SMARTER WAY TO DELIVER
+            </div>
 
-            <div className="relative flex items-center justify-between gap-4">
+            <h1 className="max-w-3xl text-5xl font-black leading-[1.08] tracking-tight sm:text-6xl lg:text-7xl">
+              Your journey.
+              <br />
+              Their delivery.
+              <br />
+              <span className="text-orange-400">One connection.</span>
+            </h1>
+
+            <p className="mt-8 max-w-xl text-lg leading-8 text-gray-400">
+              Need something from another city? CarryKart connects people who
+              need items delivered with travellers already heading that way.
+              Simple, smart, and community-powered.
+            </p>
+
+            <div className="mt-10 flex flex-wrap gap-4">
+              <a
+                href="/request"
+                className="rounded-full bg-orange-400 px-7 py-4 font-bold text-black transition hover:-translate-y-1 hover:bg-orange-300"
+              >
+                I need something <span aria-hidden="true">→</span>
+              </a>
+              <a
+                href="/travel"
+                className="rounded-full border border-white/20 px-7 py-4 font-bold transition hover:-translate-y-1 hover:border-orange-400 hover:text-orange-400"
+              >
+                I am travelling
+              </a>
+            </div>
+
+            <div className="mt-12 flex flex-wrap gap-8 border-t border-white/10 pt-8">
               <div>
-                <p className="text-[10px] font-bold tracking-[0.3em] text-orange-400">
-                  THE CARRYKART CONCEPT
-                </p>
-                <h2 className="mt-2 text-2xl font-black tracking-tight sm:text-3xl">
-                  Journeys connect us.
-                </h2>
-                <p className="mt-2 text-sm text-zinc-500">
-                  A different way to think about delivery.
-                </p>
+                <p className="text-2xl font-black text-white">01</p>
+                <p className="mt-1 text-xs text-gray-500">One community</p>
               </div>
-              <div className="flex h-14 w-14 shrink-0 items-center justify-center rounded-2xl border border-orange-500/20 bg-orange-500/10 text-3xl">
-                ✈
+              <div>
+                <p className="text-2xl font-black text-white">02</p>
+                <p className="mt-1 text-xs text-gray-500">Simple connections</p>
+              </div>
+              <div>
+                <p className="text-2xl font-black text-white">∞</p>
+                <p className="mt-1 text-xs text-gray-500">Possibilities</p>
               </div>
             </div>
+          </div>
 
-            <div className="relative mt-8 overflow-hidden rounded-2xl border border-white/[0.09] bg-[#09090b] p-5 sm:p-6">
-              <div className="flex items-center justify-between gap-3">
-                <span className="text-xs font-bold tracking-[0.18em] text-zinc-400">
-                  EXAMPLE JOURNEY
+          {/* Hero visual */}
+          <div className="relative mx-auto w-full max-w-lg">
+            <div className="absolute -inset-5 rounded-[2rem] bg-orange-400/10 blur-2xl" />
+
+            <div className="relative rounded-[2rem] border border-white/10 bg-[#141414] p-6 shadow-2xl sm:p-8">
+              <div className="flex items-center justify-between">
+                <span className="text-sm font-bold text-gray-300">
+                  CARRYKART CONNECT
                 </span>
-                <span className="rounded-full border border-orange-500/20 bg-orange-500/[0.08] px-3 py-1.5 text-[10px] font-bold tracking-wider text-orange-300">
-                  SAMPLE ONLY
+                <span className="rounded-full bg-emerald-400/10 px-3 py-1 text-xs font-bold text-emerald-400">
+                  ● LIVE CONCEPT
                 </span>
               </div>
 
-              <div className="mt-8 flex items-stretch gap-4">
-                <div className="flex flex-col items-center">
-                  <span className="h-3.5 w-3.5 rounded-full border-[3px] border-[#ff6a00] shadow-[0_0_14px_rgba(255,106,0,0.5)]" />
-                  <span className="my-2 min-h-16 flex-1 border-l border-dashed border-orange-500/40" />
-                  <span className="h-3.5 w-3.5 rounded-full bg-orange-500 shadow-[0_0_14px_rgba(255,106,0,0.45)]" />
-                </div>
-
-                <div className="flex flex-1 flex-col justify-between gap-8">
+              <div className="my-10 rounded-2xl border border-white/10 bg-[#0c0c0c] p-6">
+                <div className="flex items-center justify-between">
                   <div>
-                    <p className="text-[10px] font-bold tracking-[0.22em] text-zinc-500">
-                      FROM
-                    </p>
-                    <p className="mt-1.5 text-lg font-extrabold">Jaipur, Rajasthan</p>
-                    <p className="mt-1 text-xs text-zinc-600">Starting point</p>
+                    <p className="text-xs text-gray-500">PICKUP</p>
+                    <p className="mt-2 text-2xl font-black">Delhi</p>
                   </div>
-                  <div>
-                    <p className="text-[10px] font-bold tracking-[0.22em] text-zinc-500">
-                      TO
-                    </p>
-                    <p className="mt-1.5 text-lg font-extrabold">Delhi</p>
-                    <p className="mt-1 text-xs text-zinc-600">Destination</p>
+
+                  <div className="flex flex-1 items-center justify-center px-3">
+                    <div className="h-px flex-1 bg-orange-400/60" />
+                    <span className="px-2 text-xl text-orange-400">✈</span>
+                    <div className="h-px flex-1 bg-orange-400/60" />
+                  </div>
+
+                  <div className="text-right">
+                    <p className="text-xs text-gray-500">DELIVERY</p>
+                    <p className="mt-2 text-2xl font-black">Jaipur</p>
                   </div>
                 </div>
 
-                <span className="self-center text-2xl text-orange-400">↗</span>
+                <div className="mt-8 rounded-xl bg-white/5 p-4">
+                  <div className="flex items-center gap-3">
+                    <div className="flex h-11 w-11 items-center justify-center rounded-full bg-orange-400/15 text-xl">
+                      📦
+                    </div>
+                    <div>
+                      <p className="font-bold">Your requested item</p>
+                      <p className="text-xs text-gray-500">
+                        Waiting for a traveller connection
+                      </p>
+                    </div>
+                  </div>
+                </div>
               </div>
 
-              <div className="mt-7 flex items-center gap-3 border-t border-white/[0.08] pt-5">
-                <div className="flex h-12 w-12 shrink-0 items-center justify-center rounded-xl border border-orange-500/20 bg-orange-500/10 text-2xl">
-                  📦
-                </div>
-                <div>
-                  <p className="font-bold">An item finds a way</p>
-                  <p className="mt-1 text-xs leading-5 text-zinc-500">
-                    Imagine a request connecting with a trip.
-                  </p>
-                </div>
+              <div className="flex items-center justify-between text-sm">
+                <span className="text-gray-500">
+                  A connection starts here.
+                </span>
+                <span className="font-bold text-orange-400">CarryKart ↗</span>
               </div>
-            </div>
-
-            <div className="mt-5 flex items-center gap-2 text-xs leading-5 text-zinc-500">
-              <span className="text-orange-400">ⓘ</span>
-              Concept preview — no real bookings or deliveries are available yet.
             </div>
           </div>
         </div>
@@ -204,125 +199,202 @@ export default function Home() {
       {/* How it works */}
       <section
         id="how-it-works"
-        className="relative border-y border-white/[0.08] bg-white/[0.015]"
+        className="border-y border-white/10 bg-[#101010] py-24"
       >
-        <div className="mx-auto max-w-7xl px-5 py-20 sm:px-8 sm:py-24">
+        <div className="mx-auto max-w-7xl px-6">
           <div className="max-w-2xl">
-            <p className="text-xs font-extrabold tracking-[0.3em] text-orange-400">
+            <p className="text-sm font-bold tracking-[0.25em] text-orange-400">
               THE PROCESS
             </p>
-            <h2 className="mt-4 text-3xl leading-tight font-black tracking-tight sm:text-5xl">
-              From a request to a{" "}
-              <span className="neon-text">shared journey.</span>
+            <h2 className="mt-4 text-4xl font-black tracking-tight sm:text-5xl">
+              How it <span className="text-orange-400">works.</span>
             </h2>
-            <p className="mt-5 leading-7 text-zinc-400">
-              Here&apos;s how the proposed CarryKart experience could work.
+            <p className="mt-5 leading-7 text-gray-400">
+              Three simple steps to bring people, journeys, and deliveries
+              together.
             </p>
           </div>
 
-          <div className="mt-12 grid gap-5 md:grid-cols-3">
+          <div className="mt-14 grid gap-5 md:grid-cols-3">
             {steps.map((step) => (
-              <article
+              <div
                 key={step.number}
-                className="group relative overflow-hidden rounded-2xl border border-white/[0.09] bg-[#111114] p-7 transition duration-300 hover:-translate-y-2 hover:border-orange-500/40 hover:shadow-[0_15px_45px_rgba(255,106,0,0.07)]"
+                className="group rounded-2xl border border-white/10 bg-[#151515] p-8 transition duration-300 hover:-translate-y-2 hover:border-orange-400/50"
               >
-                <div className="pointer-events-none absolute -right-10 -top-10 h-28 w-28 rounded-full bg-orange-500/[0.06] blur-2xl transition group-hover:bg-orange-500/[0.15]" />
-                <span className="text-4xl font-black tracking-tighter text-orange-500/80 transition group-hover:text-orange-400">
+                <p className="text-5xl font-black text-orange-400/30 transition group-hover:text-orange-400">
                   {step.number}
-                </span>
-                <div className="mt-7 h-px w-12 bg-orange-500/60 transition-all group-hover:w-20" />
-                <h3 className="mt-5 text-xl font-extrabold">{step.title}</h3>
-                <p className="mt-3 leading-7 text-zinc-400">{step.description}</p>
-              </article>
+                </p>
+                <h3 className="mt-8 text-xl font-bold">{step.title}</h3>
+                <p className="mt-4 leading-7 text-gray-400">
+                  {step.description}
+                </p>
+              </div>
             ))}
           </div>
         </div>
       </section>
 
-      {/* Example routes */}
-      <section id="routes" className="mx-auto max-w-7xl px-5 py-20 sm:px-8 sm:py-24">
-        <div className="flex flex-col justify-between gap-5 sm:flex-row sm:items-end">
-          <div className="max-w-2xl">
-            <p className="text-xs font-extrabold tracking-[0.3em] text-orange-400">
-              CONNECTED BY POSSIBILITY
+      {/* Routes */}
+      <section id="routes" className="mx-auto max-w-7xl px-6 py-24">
+        <div className="flex flex-col justify-between gap-6 sm:flex-row sm:items-end">
+          <div>
+            <p className="text-sm font-bold tracking-[0.25em] text-orange-400">
+              DISCOVER CONNECTIONS
             </p>
-            <h2 className="mt-4 text-3xl leading-tight font-black tracking-tight sm:text-5xl">
-              Every trip could connect two people.
+            <h2 className="mt-4 text-4xl font-black sm:text-5xl">
+              Explore <span className="text-orange-400">routes.</span>
             </h2>
+            <p className="mt-5 text-gray-400">
+              Every journey can create a new connection.
+            </p>
           </div>
-          <p className="max-w-md text-sm leading-6 text-zinc-500">
-            Illustrative routes for the concept, not live traveller listings or
-            confirmed delivery services.
-          </p>
+
+          <a
+            href="/travel"
+            className="font-bold text-orange-400 transition hover:text-orange-300"
+          >
+            Travel with us <span aria-hidden="true">→</span>
+          </a>
         </div>
 
-        <div className="mt-10 grid gap-5 md:grid-cols-3">
+        <div className="mt-12 grid gap-5 md:grid-cols-3">
           {routes.map((route) => (
-            <article
-              key={route.from}
-              className="group rounded-2xl border border-white/[0.09] bg-[#111114] p-6 transition duration-300 hover:-translate-y-1 hover:border-orange-500/35 hover:bg-[#151518]"
+            <div
+              key={`${route.from}-${route.to}`}
+              className="rounded-2xl border border-white/10 bg-[#141414] p-7 transition hover:border-orange-400/50"
             >
-              <div className="flex items-center justify-between gap-3">
-                <span className="text-[10px] font-extrabold tracking-[0.2em] text-zinc-500">
-                  {route.tag}
-                </span>
-                <span className={`h-2.5 w-2.5 rounded-full ${route.color} shadow-[0_0_12px_rgba(255,106,0,0.35)]`} />
+              <span
+                className={`inline-block rounded-full px-3 py-1 text-[10px] font-black tracking-widest text-black ${route.color}`}
+              >
+                {route.tag}
+              </span>
+
+              <div className="mt-8 flex items-center justify-between gap-3">
+                <div>
+                  <p className="text-xs text-gray-500">FROM</p>
+                  <h3 className="mt-2 text-2xl font-black">{route.from}</h3>
+                </div>
+
+                <span className="text-2xl text-orange-400">→</span>
+
+                <div className="text-right">
+                  <p className="text-xs text-gray-500">TO</p>
+                  <h3 className="mt-2 text-2xl font-black">{route.to}</h3>
+                </div>
               </div>
 
-              <div className="mt-8 flex flex-wrap items-center gap-3 text-lg font-extrabold sm:text-xl">
-                <span>{route.from}</span>
-                <span className="text-orange-500 transition-transform group-hover:translate-x-1">
-                  →
-                </span>
-                <span>{route.to}</span>
+              <div className="mt-8 border-t border-white/10 pt-5">
+                <a
+                  href="/travel"
+                  className="text-sm font-bold text-orange-400 hover:text-orange-300"
+                >
+                  Explore this journey ↗
+                </a>
               </div>
-
-              <div className="mt-6 flex items-center justify-between border-t border-white/[0.08] pt-4">
-                <span className="text-xs text-zinc-500">Example connection</span>
-                <span className="text-lg text-orange-400">↗</span>
-              </div>
-            </article>
+            </div>
           ))}
         </div>
       </section>
 
-      {/* Vision */}
-      <section id="about" className="px-5 pb-20 sm:px-8 sm:pb-24">
-        <div className="relative mx-auto max-w-7xl overflow-hidden rounded-[2rem] border border-orange-500/20 bg-[#111114] px-6 py-12 sm:px-12 sm:py-16 lg:px-16">
-          <div className="pointer-events-none absolute -right-20 -top-24 h-80 w-80 rounded-full bg-orange-500/10 blur-[100px]" />
-
-          <div className="relative z-10 max-w-3xl">
-            <p className="text-xs font-extrabold tracking-[0.3em] text-orange-400">
+      {/* About / Vision */}
+      <section id="about" className="bg-[#101010] py-24">
+        <div className="mx-auto grid max-w-7xl items-center gap-12 px-6 md:grid-cols-2">
+          <div>
+            <p className="text-sm font-bold tracking-[0.25em] text-orange-400">
               OUR VISION
             </p>
-            <h2 className="mt-5 text-3xl leading-tight font-black tracking-tight sm:text-5xl">
-              Make everyday journeys more useful, connected, and accessible.
+            <h2 className="mt-4 text-4xl font-black leading-tight sm:text-5xl">
+              The world is connected.
+              <br />
+              <span className="text-orange-400">Delivery should be too.</span>
             </h2>
-            <p className="mt-6 max-w-2xl leading-7 text-zinc-400">
-              We&apos;re starting with an idea and building toward a trustworthy
-              platform — with clear expectations, responsible delivery
-              practices, and safety at the centre.
+          </div>
+
+          <div>
+            <p className="text-lg leading-8 text-gray-400">
+              CarryKart is an early-stage concept built around a simple idea:
+              connect people who need something delivered with people who are
+              already travelling. We want to make everyday connections easier
+              and create a community where journeys can do more.
             </p>
+
             <a
-              href="#home"
-              className="mt-8 inline-flex items-center gap-3 rounded-xl bg-[#ff6a00] px-6 py-3.5 font-extrabold text-black transition duration-300 hover:-translate-y-1 hover:bg-orange-400 hover:shadow-[0_0_25px_rgba(255,106,0,0.3)]"
+              href="/request"
+              className="mt-8 inline-flex rounded-full bg-orange-400 px-7 py-4 font-bold text-black transition hover:bg-orange-300"
             >
-              Back to top <span>↑</span>
+              Start with CarryKart →
             </a>
           </div>
         </div>
       </section>
 
+      {/* Final CTA */}
+      <section className="mx-auto max-w-7xl px-6 py-24">
+        <div className="relative overflow-hidden rounded-3xl border border-orange-400/20 bg-[#17120e] px-7 py-16 text-center sm:px-16">
+          <div className="pointer-events-none absolute left-1/2 top-0 h-64 w-64 -translate-x-1/2 rounded-full bg-orange-400/10 blur-[90px]" />
+
+          <div className="relative">
+            <p className="text-sm font-bold tracking-[0.25em] text-orange-400">
+              YOUR NEXT CONNECTION
+            </p>
+
+            <h2 className="mx-auto mt-5 max-w-3xl text-4xl font-black sm:text-6xl">
+              Make every journey
+              <span className="text-orange-400"> count.</span>
+            </h2>
+
+            <p className="mx-auto mt-6 max-w-xl leading-7 text-gray-400">
+              Need something delivered or already travelling somewhere?
+              Start your CarryKart journey today.
+            </p>
+
+            <div className="mt-9 flex flex-wrap justify-center gap-4">
+              <a
+                href="/request"
+                className="rounded-full bg-orange-400 px-7 py-4 font-bold text-black transition hover:bg-orange-300"
+              >
+                Request an item →
+              </a>
+
+              <a
+                href="/travel"
+                className="rounded-full border border-white/20 px-7 py-4 font-bold transition hover:border-orange-400 hover:text-orange-400"
+              >
+                Become a traveller
+              </a>
+            </div>
+          </div>
+        </div>
+      </section>
+
       {/* Footer */}
-      <footer className="border-t border-white/[0.08] bg-[#070708]">
-        <div className="mx-auto flex max-w-7xl flex-col gap-4 px-5 py-8 sm:flex-row sm:items-center sm:justify-between sm:px-8">
-          <a href="#home" className="text-lg font-black tracking-tight">
-            Carry<span className="text-orange-500">Kart</span>
-          </a>
-          <p className="text-xs text-zinc-600">
-            © 2026 CarryKart. An early-stage concept.
-          </p>
-          <p className="text-xs text-zinc-600">By Divyaraj Singh Bhadauriya.</p>
+      <footer className="border-t border-white/10 bg-[#080808]">
+        <div className="mx-auto flex max-w-7xl flex-col justify-between gap-8 px-6 py-10 sm:flex-row sm:items-center">
+          <div>
+            <a href="/" className="text-2xl font-black">
+              Carry<span className="text-orange-400">Kart</span>.
+            </a>
+            <p className="mt-2 text-sm text-gray-500">
+              Connecting journeys. Creating possibilities.
+            </p>
+          </div>
+
+          <div className="flex flex-wrap gap-6 text-sm text-gray-400">
+            <a href="/request" className="transition hover:text-orange-400">
+              Request an item
+            </a>
+            <a href="/travel" className="transition hover:text-orange-400">
+              Become a traveller
+            </a>
+            <a href="#about" className="transition hover:text-orange-400">
+              About
+            </a>
+          </div>
+
+          <div className="text-xs text-gray-600">
+            <p>© 2026 CarryKart. An early-stage concept.</p>
+            <p className="mt-2">By Divyaraj Singh Bhadauriya.</p>
+          </div>
         </div>
       </footer>
     </main>
