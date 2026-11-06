@@ -4,6 +4,8 @@ import CinematicBackground from "@/components/CinematicBackground";
 import HeroContent from "@/components/HeroContent";
 import HowItWorks from "@/components/HowItWorks";
 import FeatureStrip from "@/components/FeatureStrip";
+import SplineShowcase from "@/components/SplineShowcase";
+import TwoJourneys from "@/components/TwoJourneys";
 
 
 
@@ -191,66 +193,17 @@ export default function Home() {
 <FeatureStrip />
      
 
-{/* HOW IT WORKS — CINEMATIC */}
+
+      {/* HOW IT WORKS — CINEMATIC */}
 <HowItWorks />
 
+{/* INTERACTIVE 3D EXPERIENCE */}
+<SplineShowcase />
 
+{/* TWO JOURNEYS — CINEMATIC */}
+<TwoJourneys />
 
-      {/* TWO JOURNEYS */}
-      <section className="relative border-y border-white/[0.06] bg-[#100B1B] py-24 lg:py-28">
-        <div className="pointer-events-none absolute right-0 top-0 h-96 w-96 rounded-full bg-violet-700/[0.08] blur-[120px]" />
-
-        <div className="relative mx-auto max-w-7xl px-6 lg:px-10">
-          <div className="text-center">
-            <p className="text-xs font-semibold uppercase tracking-[0.3em] text-violet-300">
-              Choose your journey
-            </p>
-            <h2 className="mt-5 text-4xl font-semibold tracking-[-0.04em] sm:text-5xl">
-              Two sides. One connection.
-            </h2>
-            <p className="mx-auto mt-5 max-w-xl text-sm leading-7 text-white/45">
-              Whether you need something delivered or you're already travelling,
-              there's a place for you in the CarryKart journey.
-            </p>
-          </div>
-
-          <div className="mt-14 grid gap-6 md:grid-cols-2">
-            <div className="rounded-[2rem] border border-violet-300/20 bg-gradient-to-br from-violet-500/[0.13] to-[#171025] p-8 sm:p-10">
-              <p className="text-xs uppercase tracking-[0.25em] text-violet-200/70">
-                For requesters
-              </p>
-              <h3 className="mt-6 text-3xl font-semibold">Need something?</h3>
-              <p className="mt-4 max-w-sm text-sm leading-7 text-white/50">
-                Share what you need and explore connections with travellers
-                moving towards your destination.
-              </p>
-              <Link
-                href="/request"
-                className="mt-9 inline-flex items-center gap-3 rounded-full bg-violet-300 px-6 py-3.5 text-sm font-semibold text-[#160D26] transition hover:bg-violet-200"
-              >
-                Create a request <ArrowIcon />
-              </Link>
-            </div>
-
-            <div className="rounded-[2rem] border border-violet-300/15 bg-gradient-to-br from-[#211638] to-[#120D1D] p-8 sm:p-10">
-              <p className="text-xs uppercase tracking-[0.25em] text-violet-200/70">
-                For travellers
-              </p>
-              <h3 className="mt-6 text-3xl font-semibold">Already travelling?</h3>
-              <p className="mt-4 max-w-sm text-sm leading-7 text-white/50">
-                Share your journey and discover opportunities to connect with
-                people along your route.
-              </p>
-              <Link
-                href="/travel"
-                className="mt-9 inline-flex items-center gap-3 rounded-full border border-violet-200/30 bg-violet-300/[0.08] px-6 py-3.5 text-sm font-semibold text-violet-100 transition hover:bg-violet-300/[0.16]"
-              >
-                Share your journey <ArrowIcon />
-              </Link>
-            </div>
-          </div>
-        </div>
-      </section>
+       
 
       {/* WHY CARRYKART */}
       <section id="why-carrykart" className="mx-auto max-w-7xl px-6 py-24 lg:px-10 lg:py-32">
