@@ -133,38 +133,71 @@ function OrbitVisual() {
 export default function Home() {
   return (
     <main className="min-h-screen overflow-hidden bg-[#0B0714] text-white">
+     
       {/* NAVIGATION */}
-      <header className="sticky top-0 z-50 border-b border-white/[0.06] bg-[#0B0714]/80 backdrop-blur-2xl">
-        <div className="mx-auto flex max-w-7xl items-center justify-between px-6 py-5 lg:px-10">
-          <Link href="/" className="group flex items-center gap-3">
+      <header className="sticky top-0 z-50 border-b border-white/[0.06] bg-[#0B0714]/90 backdrop-blur-2xl">
+        <div className="mx-auto flex max-w-7xl items-center justify-between gap-4 px-5 py-4 lg:px-10">
+          {/* LOGO */}
+          <Link href="/" className="group flex shrink-0 items-center gap-3">
             <div className="flex h-10 w-10 items-center justify-center rounded-xl border border-violet-300/20 bg-violet-500/10 text-lg font-bold text-violet-200 shadow-[0_0_25px_rgba(139,92,246,0.12)]">
               C
             </div>
-            <span className="text-lg font-semibold tracking-[0.18em]">
+            <span className="text-base font-semibold tracking-[0.15em] sm:text-lg">
               CARRY<span className="text-violet-300">KART</span>
             </span>
           </Link>
 
-          <nav className="hidden items-center gap-9 text-sm text-white/55 md:flex">
+          {/* MAIN NAVIGATION */}
+          <nav className="hidden items-center gap-6 text-sm text-white/55 lg:flex">
             <Link href="#how-it-works" className="transition hover:text-violet-200">
               How it works
+            </Link>
+            <Link href="/find-traveller" className="transition hover:text-violet-200">
+              Find Traveller
+            </Link>
+            <Link href="/browse-requests" className="transition hover:text-violet-200">
+              Browse Requests
             </Link>
             <Link href="#why-carrykart" className="transition hover:text-violet-200">
               Why CarryKart
             </Link>
-            <Link href="#about" className="transition hover:text-violet-200">
-              Our vision
-            </Link>
           </nav>
 
-          <Link
-            href="/request"
-            className="group flex items-center gap-2 rounded-full border border-violet-300/30 bg-violet-500/10 px-5 py-2.5 text-xs font-semibold text-violet-100 transition hover:border-violet-200/60 hover:bg-violet-500/20"
-          >
-            Get started <ArrowIcon />
+          {/* ACCOUNT ACTIONS */}
+          <div className="flex shrink-0 items-center gap-2 sm:gap-4">
+            <Link
+              href="/login"
+              className="rounded-full px-3 py-2 text-xs font-semibold text-white/75 transition hover:text-violet-200 sm:px-4 sm:text-sm"
+            >
+              Login
+            </Link>
+
+            <Link
+              href="/signup"
+              className="group flex items-center gap-2 rounded-full border border-violet-300/40 bg-violet-500/15 px-4 py-2.5 text-xs font-semibold text-violet-100 transition hover:border-violet-200 hover:bg-violet-500/25 sm:px-5 sm:text-sm"
+            >
+              Sign Up <ArrowIcon />
+            </Link>
+          </div>
+        </div>
+
+        {/* MOBILE NAVIGATION */}
+        <div className="flex gap-5 overflow-x-auto border-t border-white/[0.05] px-5 py-3 text-xs text-white/55 lg:hidden">
+          <Link href="/find-traveller" className="shrink-0 hover:text-violet-200">
+            Find Traveller
+          </Link>
+          <Link href="/browse-requests" className="shrink-0 hover:text-violet-200">
+            Browse Requests
+          </Link>
+          <Link href="#how-it-works" className="shrink-0 hover:text-violet-200">
+            How it works
+          </Link>
+          <Link href="#about" className="shrink-0 hover:text-violet-200">
+            Our Vision
           </Link>
         </div>
       </header>
+
 
       {/* HERO */}
       <section className="relative">
