@@ -2,9 +2,12 @@
 "use client";
 
 import { useEffect, useState } from "react";
+import { useRouter } from "next/navigation";
 import { supabase } from "../../lib/supabase";
 
 export default function TravelPage() {
+  const router = useRouter();
+
   const [message, setMessage] = useState("");
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [today, setToday] = useState("");
@@ -43,7 +46,18 @@ export default function TravelPage() {
     setIsSubmitting(true);
 
     try {
+      const {
+        data: { user },
+        error: authError,
+      } = await supabase.auth.getUser();
+
+      if (authError || !user) {
+        router.push("/login");
+        return;
+      }
+
       const { error } = await supabase.from("traveller_routes").insert({
+        user_id: user.id,
         origin_city: form.from.trim(),
         destination_city: form.to.trim(),
         travel_date: form.date,
@@ -81,20 +95,20 @@ export default function TravelPage() {
   }
 
   const inputClass =
-    "w-full rounded-xl border border-white/15 bg-slate-900 px-4 py-3 text-white outline-none focus:border-orange-400";
+    "w-full rounded-xl border border-white/15 bg-slate-900 px-4 py-3 text-white outline-none focus:border-violet-400";
 
   return (
-    <main className="min-h-screen bg-slate-950 px-5 py-12 text-white">
+    <main className="min-h-screen bg-[#0B0714] px-5 py-12 text-white">
       <div className="mx-auto max-w-2xl">
         <a
           href="/"
-          className="text-sm font-semibold text-orange-400 hover:text-orange-300"
+          className="text-sm font-semibold text-violet-300 hover:text-white"
         >
           ← Back to CarryKart
         </a>
 
-        <div className="mt-8 rounded-3xl border border-white/10 bg-white/[0.04] p-6 sm:p-9">
-          <p className="text-sm font-bold uppercase tracking-[0.2em] text-orange-400">
+        <div className="mt-8 rounded-3xl border border-violet-400/15 bg-[#171026] p-6 sm:p-9">
+          <p className="text-sm font-bold uppercase tracking-[0.2em] text-violet-300">
             Travel with CarryKart
           </p>
 
@@ -102,7 +116,7 @@ export default function TravelPage() {
             Share your journey.
           </h1>
 
-          <p className="mt-3 leading-7 text-slate-300">
+          <p className="mt-3 leading-7 text-white/60">
             Tell us where you are travelling and how much extra space you
             have. Your route will be saved to CarryKart&apos;s shared
             database. This does not automatically arrange a delivery.
@@ -215,7 +229,7 @@ export default function TravelPage() {
             <button
               type="submit"
               disabled={isSubmitting}
-              className="w-full rounded-xl bg-orange-400 px-6 py-4 font-bold text-slate-950 transition hover:bg-orange-300 disabled:cursor-not-allowed disabled:opacity-60"
+              className="w-full rounded-xl bg-violet-400 px-6 py-4 font-bold text-[#0B0714] transition hover:bg-violet-300 disabled:cursor-not-allowed disabled:opacity-60"
             >
               {isSubmitting ? "Saving travel details..." : "Share travel route →"}
             </button>
@@ -235,7 +249,7 @@ export default function TravelPage() {
             )}
           </form>
 
-          <p className="mt-6 text-xs leading-5 text-slate-400">
+          <p className="mt-6 text-xs leading-5 text-white/40">
             Demo marketplace. Submitted routes may be visible to other users.
             Do not enter sensitive personal information. This form does not
             arrange or confirm any delivery.
