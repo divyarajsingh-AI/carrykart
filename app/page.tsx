@@ -1,5 +1,11 @@
 
 import Link from "next/link";
+import CinematicBackground from "@/components/CinematicBackground";
+import HeroContent from "@/components/HeroContent";
+import HowItWorks from "@/components/HowItWorks";
+import FeatureStrip from "@/components/FeatureStrip";
+
+
 
 const steps = [
   {
@@ -160,61 +166,15 @@ export default function Home() {
 
       {/* HERO */}
       <section className="relative">
+        <CinematicBackground />
         <div className="pointer-events-none absolute left-1/2 top-0 h-[600px] w-[850px] -translate-x-1/2 rounded-full bg-violet-700/[0.09] blur-[150px]" />
 
         <div className="relative mx-auto grid max-w-7xl items-center gap-10 px-6 py-20 md:py-28 lg:grid-cols-[1.05fr_0.95fr] lg:px-10">
-          <div className="relative z-10">
-            <div className="mb-8 inline-flex items-center gap-2 rounded-full border border-violet-300/20 bg-violet-400/[0.07] px-4 py-2">
-              <span className="h-1.5 w-1.5 rounded-full bg-violet-300 shadow-[0_0_12px_3px_rgba(167,139,250,0.5)]" />
-              <span className="text-[10px] font-medium uppercase tracking-[0.22em] text-violet-200">
-                A new way to move things
-              </span>
-            </div>
 
-            <h1 className="max-w-3xl text-5xl font-semibold leading-[1.08] tracking-[-0.055em] sm:text-6xl lg:text-7xl">
-              Distance is just
-              <span className="block bg-gradient-to-r from-violet-200 via-violet-400 to-fuchsia-300 bg-clip-text text-transparent">
-                a detail.
-              </span>
-              <span className="mt-2 block text-white/90">We connect the rest.</span>
-            </h1>
+         <HeroContent />
 
-            <p className="mt-8 max-w-xl text-base leading-8 text-white/50 sm:text-lg">
-              CarryKart brings people, travellers and everyday delivery needs
-              closer together. A smarter way to connect journeys and move what
-              matters.
-            </p>
 
-            <div className="mt-10 flex flex-col gap-4 sm:flex-row">
-              <Link
-                href="/request"
-                className="group flex items-center justify-center gap-3 rounded-full bg-violet-300 px-7 py-4 text-sm font-semibold text-[#160D26] shadow-[0_8px_40px_rgba(167,139,250,0.2)] transition duration-300 hover:-translate-y-1 hover:bg-violet-200 hover:shadow-[0_12px_45px_rgba(167,139,250,0.32)]"
-              >
-                I need something <ArrowIcon />
-              </Link>
-              <Link
-                href="/travel"
-                className="flex items-center justify-center gap-3 rounded-full border border-white/10 bg-white/[0.035] px-7 py-4 text-sm font-medium text-white/80 transition duration-300 hover:-translate-y-1 hover:border-violet-300/40 hover:bg-violet-400/[0.08]"
-              >
-                I'm travelling <ArrowIcon />
-              </Link>
-            </div>
-
-            <div className="mt-14 flex flex-wrap gap-x-8 gap-y-4 border-t border-white/[0.07] pt-7">
-              <div>
-                <p className="text-sm font-semibold text-white">People first</p>
-                <p className="mt-1 text-xs text-white/35">Built around connection</p>
-              </div>
-              <div>
-                <p className="text-sm font-semibold text-white">Journey driven</p>
-                <p className="mt-1 text-xs text-white/35">Travel meets delivery</p>
-              </div>
-              <div>
-                <p className="text-sm font-semibold text-white">Future focused</p>
-                <p className="mt-1 text-xs text-white/35">A smarter concept</p>
-              </div>
-            </div>
-          </div>
+            
 
           <div className="relative mx-auto w-full max-w-xl">
             <OrbitVisual />
@@ -227,174 +187,13 @@ export default function Home() {
         <div className="h-px bg-gradient-to-r from-transparent via-violet-300/20 to-transparent" />
       </div>
 
-{/* PREMIUM FEATURE STRIP */}
-
-<section className="relative z-10 mx-auto max-w-7xl px-6 pb-16">
-  <div className="grid grid-cols-1 gap-4 rounded-3xl border border-violet-300/10 bg-[#1D1430]/40 p-6 backdrop-blur-xl md:grid-cols-3 md:p-8">
-
-    <div className="flex items-center gap-4">
-      <div className="flex h-12 w-12 shrink-0 items-center justify-center rounded-2xl border border-violet-300/20 bg-violet-400/10 text-xl">
-        <span>📦</span>
-      </div>
-      <div>
-        <p className="text-sm font-semibold text-white">For Requesters</p>
-        <p className="mt-1 text-xs text-white/45">
-          Get your items delivered through travellers.
-        </p>
-      </div>
-    </div>
-
-    <div className="flex items-center gap-4 border-violet-300/10 md:border-l md:pl-6">
-      <div className="flex h-12 w-12 shrink-0 items-center justify-center rounded-2xl border border-violet-300/20 bg-violet-400/10 text-xl">
-        <span>✈️</span>
-      </div>
-      <div>
-        <p className="text-sm font-semibold text-white">For Travellers</p>
-        <p className="mt-1 text-xs text-white/45">
-          Turn your available travel space into an opportunity.
-        </p>
-      </div>
-    </div>
-
-    <div className="flex items-center gap-4 border-violet-300/10 md:border-l md:pl-6">
-      <div className="flex h-12 w-12 shrink-0 items-center justify-center rounded-2xl border border-violet-300/20 bg-violet-400/10 text-xl">
-        <span>🌐</span>
-      </div>
-      <div>
-        <p className="text-sm font-semibold text-white">One Connected Journey</p>
-        <p className="mt-1 text-xs text-white/45">
-          Connecting people, places and possibilities.
-        </p>
-      </div>
-    </div>
-
-  </div>
-</section>
-
+{/* PREMIUM FEATURE STRIP — CINEMATIC */}
+<FeatureStrip />
      
-{/* HOW IT WORKS — ULTRA PREMIUM */}
 
-<section
-  id="how-it-works"
-  className="relative mx-auto max-w-7xl overflow-hidden px-6 py-24 lg:px-10 lg:py-32"
->
-  {/* Background glow */}
-  <div className="pointer-events-none absolute left-1/2 top-1/2 h-96 w-96 -translate-x-1/2 -translate-y-1/2 rounded-full bg-violet-600/10 blur-[130px]" />
+{/* HOW IT WORKS — CINEMATIC */}
+<HowItWorks />
 
-  <div className="relative z-10">
-    <div className="mx-auto max-w-2xl text-center">
-      <p className="text-xs font-semibold uppercase tracking-[0.35em] text-violet-300">
-        The process
-      </p>
-
-      <h2 className="mt-5 text-4xl font-semibold tracking-[-0.04em] sm:text-5xl lg:text-6xl">
-        Three steps.
-        <span className="block text-violet-300">
-          One connected journey.
-        </span>
-      </h2>
-
-      <p className="mx-auto mt-6 max-w-xl text-sm leading-7 text-white/45 sm:text-base">
-        CarryKart brings requesters and travellers together through
-        a simple, seamless journey.
-      </p>
-    </div>
-
-    <div className="relative mt-16 grid gap-6 md:grid-cols-3">
-
-      {/* STEP 01 */}
-      <div className="group relative rounded-3xl border border-violet-300/10 bg-gradient-to-br from-[#24183B]/90 to-[#100B1B]/95 p-8 transition-all duration-500 hover:-translate-y-3 hover:border-violet-300/40 hover:shadow-[0_25px_80px_rgba(139,92,246,0.15)]">
-        <div className="flex items-center justify-between">
-          <span className="text-xs font-semibold tracking-[0.3em] text-violet-300">
-            STEP 01
-          </span>
-          <span className="text-3xl text-violet-300/50 transition duration-500 group-hover:scale-125 group-hover:text-violet-200">
-            ◎
-          </span>
-        </div>
-
-        <div className="my-10 flex h-16 w-16 items-center justify-center rounded-2xl border border-violet-300/20 bg-violet-400/10 text-3xl shadow-[0_0_35px_rgba(167,139,250,0.12)]">
-          📦
-        </div>
-
-        <h3 className="text-2xl font-semibold text-white">
-          Make a Request
-        </h3>
-
-        <p className="mt-4 text-sm leading-7 text-white/45">
-          Tell us what item you need, where it is available
-          and where you want it delivered.
-        </p>
-
-        <div className="mt-9 h-px w-full bg-gradient-to-r from-violet-400/50 to-transparent" />
-        <p className="mt-5 text-xs tracking-widest text-violet-300/60">
-          FOR REQUESTERS
-        </p>
-      </div>
-
-      {/* STEP 02 */}
-      <div className="group relative rounded-3xl border border-violet-300/10 bg-gradient-to-br from-[#24183B]/90 to-[#100B1B]/95 p-8 transition-all duration-500 hover:-translate-y-3 hover:border-violet-300/40 hover:shadow-[0_25px_80px_rgba(139,92,246,0.15)]">
-        <div className="flex items-center justify-between">
-          <span className="text-xs font-semibold tracking-[0.3em] text-violet-300">
-            STEP 02
-          </span>
-          <span className="text-3xl text-violet-300/50 transition duration-500 group-hover:scale-125 group-hover:text-violet-200">
-            ✧
-          </span>
-        </div>
-
-        <div className="my-10 flex h-16 w-16 items-center justify-center rounded-2xl border border-violet-300/20 bg-violet-400/10 text-3xl shadow-[0_0_35px_rgba(167,139,250,0.12)]">
-          ✈️
-        </div>
-
-        <h3 className="text-2xl font-semibold text-white">
-          Connect with a Traveller
-        </h3>
-
-        <p className="mt-4 text-sm leading-7 text-white/45">
-          Travellers can share their upcoming journeys
-          and connect with relevant requests.
-        </p>
-
-        <div className="mt-9 h-px w-full bg-gradient-to-r from-violet-400/50 to-transparent" />
-        <p className="mt-5 text-xs tracking-widest text-violet-300/60">
-          FOR TRAVELLERS
-        </p>
-      </div>
-
-      {/* STEP 03 */}
-      <div className="group relative rounded-3xl border border-violet-300/10 bg-gradient-to-br from-[#24183B]/90 to-[#100B1B]/95 p-8 transition-all duration-500 hover:-translate-y-3 hover:border-violet-300/40 hover:shadow-[0_25px_80px_rgba(139,92,246,0.15)]">
-        <div className="flex items-center justify-between">
-          <span className="text-xs font-semibold tracking-[0.3em] text-violet-300">
-            STEP 03
-          </span>
-          <span className="text-3xl text-violet-300/50 transition duration-500 group-hover:scale-125 group-hover:text-violet-200">
-            ↗
-          </span>
-        </div>
-
-        <div className="my-10 flex h-16 w-16 items-center justify-center rounded-2xl border border-violet-300/20 bg-violet-400/10 text-3xl shadow-[0_0_35px_rgba(167,139,250,0.12)]">
-          🌍
-        </div>
-
-        <h3 className="text-2xl font-semibold text-white">
-          Complete the Journey
-        </h3>
-
-        <p className="mt-4 text-sm leading-7 text-white/45">
-          Coordinate the handover and bring the requested
-          item closer to its destination.
-        </p>
-
-        <div className="mt-9 h-px w-full bg-gradient-to-r from-violet-400/50 to-transparent" />
-        <p className="mt-5 text-xs tracking-widest text-violet-300/60">
-          CONNECTION COMPLETE
-        </p>
-      </div>
-
-    </div>
-  </div>
-</section>
 
 
       {/* TWO JOURNEYS */}
