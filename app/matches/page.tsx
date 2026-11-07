@@ -3,10 +3,12 @@
 
 import { useEffect, useState } from "react";
 import Link from "next/link";
+import { useRouter } from "next/navigation";
 import { supabase } from "@/lib/supabase";
 
 type Traveller = {
   id: string;
+  user_id: string | null;
   origin_city: string;
   destination_city: string;
   travel_date: string;
@@ -16,6 +18,7 @@ type Traveller = {
 
 type BuyerRequest = {
   id: string;
+  user_id: string | null;
   item_name: string;
   pickup_city: string;
   delivery_city: string;
@@ -29,9 +32,13 @@ type Match = {
 };
 
 export default function MatchesPage() {
+  const router = useRouter();
+
   const [matches, setMatches] = useState<Match[]>([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState("");
+  const [chatError, setChatError] = useState("");
+  const [startingChat, setStartingChat] = useState("");
 
   useEffect(() => {
     async function findMatches() {
@@ -42,14 +49,14 @@ export default function MatchesPage() {
         supabase
           .from("traveller_routes")
           .select(
-            "id, origin_city, destination_city, travel_date, available_space, details"
+            "id, user_id, origin_city, destination_city, travel_date, available_space, details"
           )
           .gte("travel_date", new Date().toLocaleDateString("en-CA")),
 
         supabase
           .from("buyer_requests")
           .select(
-            "id, item_name, pickup_city, delivery_city, budget, details"
+            "id, user_id, item_name, pickup_city, delivery_city, budget, details"
           ),
       ]);
 
@@ -91,10 +98,92 @@ export default function MatchesPage() {
     findMatches();
   }, []);
 
+  async function startChat(match: Match) {
+    const matchKey = `${match.traveller.id}-${match.request.id}`;
+
+    setStartingChat(matchKey);
+    setChatError("");
+
+    try {
+      const {
+        data: { user },
+        error: authError,
+      } = await supabase.auth.getUser();
+
+      if (authError || !user) {
+        router.push("/login");
+        return;
+      }
+
+      const requesterId = match.request.user_id;
+      const travellerId = match.traveller.user_id;
+
+      if (!requesterId || !travellerId) {
+        setChatError(
+          "This match cannot start a chat because one listing has no registered owner."
+        );
+        return;
+      }
+
+      if (requesterId === travellerId) {
+        setChatError(
+          "You cannot start a conversation with yourself."
+        );
+        return;
+      }
+
+      if (user.id !== requesterId && user.id !== travellerId) {
+        setChatError(
+          "Only the requester or traveller who owns this match can start the conversation."
+        );
+        return;
+      }
+
+      const { data: existingChat, error: lookupError } = await supabase
+        .from("chat_conversations")
+        .select("id")
+        .eq("request_id", match.request.id)
+        .eq("route_id", match.traveller.id)
+        .maybeSingle();
+
+      if (lookupError) {
+        throw lookupError;
+      }
+
+      if (existingChat) {
+        router.push(`/chat/${existingChat.id}`);
+        return;
+      }
+
+      const { data: newChat, error: createError } = await supabase
+        .from("chat_conversations")
+        .insert({
+          requester_id: requesterId,
+          traveller_id: travellerId,
+          request_id: match.request.id,
+          route_id: match.traveller.id,
+        })
+        .select("id")
+        .single();
+
+      if (createError) {
+        throw createError;
+      }
+
+      router.push(`/chat/${newChat.id}`);
+    } catch (err) {
+      const message =
+        err instanceof Error ? err.message : "Could not start chat.";
+
+      setChatError(message);
+    } finally {
+      setStartingChat("");
+    }
+  }
+
   return (
     <main className="min-h-screen bg-[#0B0714] px-5 py-16 text-white sm:px-8">
       <div className="mx-auto max-w-6xl">
-
         <Link
           href="/"
           className="text-sm text-violet-300 hover:text-white"
@@ -132,6 +221,12 @@ export default function MatchesPage() {
           </div>
         )}
 
+        {chatError && (
+          <div className="mb-6 rounded-2xl border border-red-400/20 bg-red-400/10 p-5 text-sm text-red-300">
+            {chatError}
+          </div>
+        )}
+
         {!loading && !error && (
           <>
             <div className="mb-8 flex items-center justify-between border-b border-white/10 pb-5">
@@ -157,81 +252,99 @@ export default function MatchesPage() {
               </div>
             ) : (
               <div className="grid gap-6 md:grid-cols-2">
-                {matches.map((match, index) => (
-                  <article
-                    key={`${match.traveller.id}-${match.request.id}`}
-                    className="rounded-3xl border border-violet-400/20 bg-gradient-to-br from-[#1D1430] to-[#100B1B] p-7 shadow-[0_10px_40px_rgba(139,92,246,0.08)]"
-                  >
-                    <div className="flex items-center justify-between">
-                      <span className="rounded-full border border-violet-400/20 bg-violet-400/10 px-3 py-1.5 text-xs text-violet-300">
-                        Route Match #{index + 1}
-                      </span>
-                      <span className="text-sm text-violet-300">✧</span>
-                    </div>
+                {matches.map((match, index) => {
+                  const matchKey = `${match.traveller.id}-${match.request.id}`;
 
-                    <h3 className="mt-6 text-xl font-semibold">
-                      {match.request.item_name}
-                    </h3>
+                  return (
+                    <article
+                      key={matchKey}
+                      className="rounded-3xl border border-violet-400/20 bg-gradient-to-br from-[#1D1430] to-[#100B1B] p-7 shadow-[0_10px_40px_rgba(139,92,246,0.08)]"
+                    >
+                      <div className="flex items-center justify-between">
+                        <span className="rounded-full border border-violet-400/20 bg-violet-400/10 px-3 py-1.5 text-xs text-violet-300">
+                          Route Match #{index + 1}
+                        </span>
+                        <span className="text-sm text-violet-300">✧</span>
+                      </div>
 
-                    <div className="mt-6 rounded-2xl border border-white/10 bg-white/[0.03] p-5">
-                      <p className="text-xs text-white/40">
-                        MATCHED ROUTE
-                      </p>
-                      <p className="mt-3 text-lg font-medium">
-                        {match.traveller.origin_city}
-                      </p>
-                      <p className="my-2 text-violet-300">↓</p>
-                      <p className="text-lg font-medium">
-                        {match.traveller.destination_city}
-                      </p>
-                    </div>
+                      <h3 className="mt-6 text-xl font-semibold">
+                        {match.request.item_name}
+                      </h3>
 
-                    <div className="mt-5 grid grid-cols-2 gap-4">
-                      <div>
+                      <div className="mt-6 rounded-2xl border border-white/10 bg-white/[0.03] p-5">
                         <p className="text-xs text-white/40">
-                          Travel Date
+                          MATCHED ROUTE
                         </p>
-                        <p className="mt-1 text-sm">
-                          {new Date(
-                            match.traveller.travel_date + "T00:00:00"
-                          ).toLocaleDateString("en-IN")}
+                        <p className="mt-3 text-lg font-medium">
+                          {match.traveller.origin_city}
+                        </p>
+                        <p className="my-2 text-violet-300">↓</p>
+                        <p className="text-lg font-medium">
+                          {match.traveller.destination_city}
                         </p>
                       </div>
 
-                      <div>
-                        <p className="text-xs text-white/40">
-                          Available Space
-                        </p>
-                        <p className="mt-1 text-sm">
-                          {match.traveller.available_space || "Not specified"}
-                        </p>
+                      <div className="mt-5 grid grid-cols-2 gap-4">
+                        <div>
+                          <p className="text-xs text-white/40">
+                            Travel Date
+                          </p>
+                          <p className="mt-1 text-sm">
+                            {new Date(
+                              match.traveller.travel_date + "T00:00:00"
+                            ).toLocaleDateString("en-IN")}
+                          </p>
+                        </div>
+
+                        <div>
+                          <p className="text-xs text-white/40">
+                            Available Space
+                          </p>
+                          <p className="mt-1 text-sm">
+                            {match.traveller.available_space ||
+                              "Not specified"}
+                          </p>
+                        </div>
                       </div>
-                    </div>
 
-                    {match.request.budget !== null && (
-                      <div className="mt-5">
-                        <p className="text-xs text-white/40">
-                          Buyer's Budget
+                      {match.request.budget !== null && (
+                        <div className="mt-5">
+                          <p className="text-xs text-white/40">
+                            Buyer's Budget
+                          </p>
+                          <p className="mt-1 text-xl font-semibold text-violet-200">
+                            ₹
+                            {Number(match.request.budget).toLocaleString(
+                              "en-IN"
+                            )}
+                          </p>
+                        </div>
+                      )}
+
+                      {match.traveller.details && (
+                        <p className="mt-4 text-sm leading-6 text-white/50">
+                          Traveller: {match.traveller.details}
                         </p>
-                        <p className="mt-1 text-xl font-semibold text-violet-200">
-                          ₹{Number(match.request.budget).toLocaleString("en-IN")}
+                      )}
+
+                      {match.request.details && (
+                        <p className="mt-2 text-sm leading-6 text-white/50">
+                          Request: {match.request.details}
                         </p>
-                      </div>
-                    )}
+                      )}
 
-                    {match.traveller.details && (
-                      <p className="mt-4 text-sm leading-6 text-white/50">
-                        Traveller: {match.traveller.details}
-                      </p>
-                    )}
-
-                    {match.request.details && (
-                      <p className="mt-2 text-sm leading-6 text-white/50">
-                        Request: {match.request.details}
-                      </p>
-                    )}
-                  </article>
-                ))}
+                      <button
+                        onClick={() => startChat(match)}
+                        disabled={startingChat === matchKey}
+                        className="mt-7 w-full rounded-full bg-violet-500 px-6 py-3.5 text-sm font-semibold text-white transition hover:bg-violet-400 disabled:cursor-not-allowed disabled:opacity-50"
+                      >
+                        {startingChat === matchKey
+                          ? "Opening Chat..."
+                          : "Start Chat →"}
+                      </button>
+                    </article>
+                  );
+                })}
               </div>
             )}
           </>
@@ -242,7 +355,6 @@ export default function MatchesPage() {
             CarryKart — Every journey connects possibilities.
           </p>
         </div>
-
       </div>
     </main>
   );
