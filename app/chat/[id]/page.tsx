@@ -4,6 +4,7 @@
 import { useEffect, useState, useRef } from "react";
 import { useParams, useRouter } from "next/navigation";
 import { supabase } from "../../../lib/supabase";
+import { Suspense } from "react";
 
 type Message = {
   id: string;
@@ -24,7 +25,7 @@ type Conversation = {
   traveller_id: string;
 };
 
-export default function ConversationPage() {
+function ConversationContent() {
   const { id } = useParams<{ id: string }>();
   const router = useRouter();
   const bottomRef = useRef<HTMLDivElement>(null);
@@ -329,5 +330,18 @@ export default function ConversationPage() {
         </div>
       </section>
     </main>
+  );
+}
+export default function ConversationPage() {
+  return (
+    <Suspense
+      fallback={
+        <div className="min-h-screen bg-[#0B0714] flex items-center justify-center text-white">
+          Loading chat...
+        </div>
+      }
+    >
+      <ConversationContent />
+    </Suspense>
   );
 }
