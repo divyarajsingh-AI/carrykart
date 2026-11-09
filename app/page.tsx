@@ -6,7 +6,7 @@ import HowItWorks from "@/components/HowItWorks";
 import FeatureStrip from "@/components/FeatureStrip";
 import SplineShowcase from "@/components/SplineShowcase";
 import TwoJourneys from "@/components/TwoJourneys";
-
+import MobileMenu from "@/components/MobileMenu";
 
 
 const steps = [
@@ -131,6 +131,7 @@ function OrbitVisual() {
 }
 
 export default function Home() {
+ 
   return (
     <main className="min-h-screen overflow-hidden bg-[#0B0714] text-white">
      
@@ -148,20 +149,33 @@ export default function Home() {
           </Link>
 
           {/* MAIN NAVIGATION */}
-          <nav className="hidden items-center gap-6 text-sm text-white/55 lg:flex">
-            <Link href="#how-it-works" className="transition hover:text-violet-200">
-              How it works
-            </Link>
-            <Link href="/find-traveller" className="transition hover:text-violet-200">
-              Find Traveller
-            </Link>
-            <Link href="/browse-requests" className="transition hover:text-violet-200">
-              Browse Requests
-            </Link>
-            <Link href="#why-carrykart" className="transition hover:text-violet-200">
-              Why CarryKart
-            </Link>
-          </nav>
+        <nav className="hidden items-center gap-5 text-sm text-white/55 lg:flex">
+  <Link href="#how-it-works" className="transition hover:text-violet-200">
+    How it works
+  </Link>
+
+  <Link href="/find-traveller" className="transition hover:text-violet-200">
+    Find Traveller
+  </Link>
+
+  <Link href="/browse-requests" className="transition hover:text-violet-200">
+    Browse Requests
+  </Link>
+
+  <Link href="/dashboard" className="transition hover:text-violet-200">
+    Dashboard
+  </Link>
+
+  <Link href="/chat" className="transition hover:text-violet-200">
+    Chats
+  </Link>
+
+  <Link href="#why-carrykart" className="transition hover:text-violet-200">
+    Why CarryKart
+  </Link>
+</nav>
+
+<MobileMenu />
 
           {/* ACCOUNT ACTIONS */}
           <div className="flex shrink-0 items-center gap-2 sm:gap-4">
