@@ -32,6 +32,7 @@ function ConversationContent() {
 
   const [userId, setUserId] = useState("");
   const [otherName, setOtherName] = useState("CarryKart Member");
+  const [isOtherOnline, setIsOtherOnline] = useState(false);
   const [messages, setMessages] = useState<Message[]>([]);
   const [newMessage, setNewMessage] = useState("");
   const [loading, setLoading] = useState(true);
@@ -107,29 +108,53 @@ function ConversationContent() {
 
       setMessages(data || []);
 
-      channel = supabase
-        .channel(`chat-${id}`)
-        .on(
-          "postgres_changes",
-          {
-            event: "INSERT",
-            schema: "public",
-            table: "chat_messages",
-            filter: `conversation_id=eq.${id}`,
-          },
-          (payload) => {
-            const incoming = payload.new as Message;
+     channel = supabase
+  .channel(`chat-${id}`, {
+    config: {
+      presence: {
+        key: user.id,
+      },
+    },
+  })
+  .on(
+    "postgres_changes",
+    {
+      event: "INSERT",
+      schema: "public",
+      table: "chat_messages",
+      filter: `conversation_id=eq.${id}`,
+    },
+    (payload) => {
+      const incoming = payload.new as Message;
 
-            setMessages((current) => {
-              if (current.some((message) => message.id === incoming.id)) {
-                return current;
-              }
+      setMessages((current) => {
+        if (current.some((message) => message.id === incoming.id)) {
+          return current;
+        }
 
-              return [...current, incoming];
-            });
-          }
+        return [...current, incoming];
+      });
+    }
+  )
+  .on("presence", { event: "sync" }, () => {
+    const presenceState = channel!.presenceState();
+
+    const otherIsOnline = Object.values(presenceState).some(
+      (presences) =>
+        presences.some(
+          (presence: any) => presence.user_id === otherUserId
         )
-        .subscribe();
+    );
+
+    setIsOtherOnline(otherIsOnline);
+  })
+  .subscribe(async (status) => {
+    if (status === "SUBSCRIBED") {
+      await channel!.track({
+        user_id: user.id,
+      });
+    }
+  });
 
       setLoading(false);
     }
@@ -182,9 +207,9 @@ function ConversationContent() {
     .toUpperCase();
 
   return (
-    <main className="flex min-h-screen flex-col overflow-hidden bg-[#0B0714] text-white">
+  <main className="flex min-h-screen flex-col overflow-hidden bg-[#0B0714] text-white">
 
-      {/* HEADER */}
+        {/* HEADER */}
       <header className="sticky top-0 z-20 border-b border-violet-300/10 bg-[#100B1B]/95 backdrop-blur-xl">
         <div className="mx-auto flex max-w-5xl items-center gap-4 px-4 py-4 sm:px-6">
 
@@ -203,17 +228,31 @@ function ConversationContent() {
             <h1 className="truncate font-semibold text-white">
               {otherName}
             </h1>
-            <p className="mt-1 flex items-center gap-1.5 text-xs text-violet-300/70">
-              <span className="h-1.5 w-1.5 rounded-full bg-violet-400" />
-              CarryKart Member
-            </p>
+
+            <div className="mt-1 flex items-center gap-2">
+              <span
+                className={`h-2 w-2 rounded-full ${
+                  isOtherOnline ? "bg-green-400" : "bg-gray-500"
+                }`}
+              />
+
+              <span
+                className={`text-xs ${
+                  isOtherOnline ? "text-green-400" : "text-white/40"
+                }`}
+              >
+                {isOtherOnline ? "Online" : "Offline"}
+              </span>
+            </div>
           </div>
 
           <div className="hidden rounded-full border border-violet-300/15 bg-violet-500/10 px-4 py-2 text-xs font-medium text-violet-200 sm:block">
             Private Chat
           </div>
+
         </div>
       </header>
+
 
       {/* MESSAGES */}
       <section className="mx-auto flex w-full max-w-5xl flex-1 flex-col px-4 sm:px-6">
