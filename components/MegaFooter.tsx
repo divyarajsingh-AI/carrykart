@@ -361,7 +361,7 @@ export default function MegaFooter() {
       />
 
       <p className="mt-2 text-center text-xs text-[#A9ADC9]/60">
-        © 2026 CarryKart. All rights reserved.
+        © 2026 CarryKart. By Mrigendra Singh
       </p>
     </footer>
   );
