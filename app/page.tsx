@@ -12,12 +12,12 @@ import HeroContent from "@/components/HeroContent";
 import HowItWorks from "@/components/HowItWorks";
 import FeatureStrip from "@/components/FeatureStrip";
 import SplineShowcase from "@/components/SplineShowcase";
-import TwoJourneys from "@/components/TwoJourneys";
+
 import MobileMenu from "@/components/MobileMenu";
 import CarryKartSculpture from "@/components/CarryKartSculpture";
-import MatterSection from "@/components/MatterSection";
-import WonderSection from "@/components/WonderSection";
-import StudioSection from "@/components/StudioSection";
+
+
+
 import MegaFooter from "@/components/MegaFooter";
 import CarryKartMotionSections from "@/components/CarryKartMotionSections";
 
@@ -147,9 +147,7 @@ export default function Home() {
               Chats
             </Link>
 
-            <Link href="#why-carrykart" className="transition hover:text-violet-200">
-              Why CarryKart
-            </Link>
+            
           </nav>
 
           <MobileMenu />
@@ -224,14 +222,11 @@ export default function Home() {
       {/* PREMIUM FEATURE STRIP */}
       <FeatureStrip />
 
-      {/* LET'S MAKE SOMETHING MATTER */}
-      <MatterSection />
+     
 
-      {/* WONDER */}
-      <WonderSection />
+      
 
-      {/* THE STUDIO */}
-      <StudioSection />
+    
 
       {/* HOW IT WORKS */}
       <HowItWorks />
@@ -241,58 +236,10 @@ export default function Home() {
       {/* INTERACTIVE 3D EXPERIENCE */}
       <SplineShowcase />
 
-      {/* TWO JOURNEYS */}
-      <TwoJourneys />
+      
+      
 
-      {/* WHY CARRYKART */}
-      <section
-        id="why-carrykart"
-        className="mx-auto max-w-7xl px-6 py-24 lg:px-10 lg:py-32"
-      >
-        <div className="grid gap-14 lg:grid-cols-2 lg:items-center">
-          <div>
-            <p className="text-xs font-semibold uppercase tracking-[0.3em] text-violet-300">
-              Why CarryKart
-            </p>
-
-            <h2 className="mt-5 text-4xl font-semibold leading-tight tracking-[-0.04em] sm:text-5xl">
-              More than movement.
-              <span className="block text-violet-300">It's connection.</span>
-            </h2>
-
-            <p className="mt-6 max-w-lg text-sm leading-8 text-white/45">
-              We imagine a world where journeys can create opportunities.
-              CarryKart is being built around a simple idea: connect people
-              who need something with people who are already on the move.
-            </p>
-          </div>
-
-          <div className="grid gap-4 sm:grid-cols-2">
-            {[
-              ["01", "Human connection", "Bringing people and journeys closer."],
-              ["02", "Simple experience", "A straightforward way to share needs and routes."],
-              ["03", "Journey focused", "Making better use of journeys already happening."],
-              ["04", "Built for tomorrow", "A fresh concept for a connected world."],
-            ].map(([number, title, description]) => (
-              <div
-                key={number}
-                className="rounded-2xl border border-white/[0.07] bg-white/[0.025] p-6 transition hover:border-violet-300/30 hover:bg-violet-400/[0.04]"
-              >
-                <span className="text-xs tracking-[0.2em] text-violet-300/60">
-                  {number}
-                </span>
-
-                <h3 className="mt-6 text-base font-semibold">{title}</h3>
-
-                <p className="mt-3 text-xs leading-6 text-white/40">
-                  {description}
-                </p>
-              </div>
-            ))}
-          </div>
-        </div>
-      </section>
-
+       
       {/* VISION */}
       <section id="about" className="px-6 pb-24 lg:px-10 lg:pb-32">
         <div className="relative mx-auto max-w-7xl overflow-hidden rounded-[2rem] border border-violet-300/15 bg-gradient-to-br from-[#25173D] via-[#171025] to-[#100B1B] px-7 py-16 text-center sm:px-14 sm:py-24">

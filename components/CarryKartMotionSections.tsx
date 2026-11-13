@@ -345,14 +345,14 @@ export default function CarryKartMotionSections() {
                 <div className="ck-heading-row">
                   <div>
                     <small>This month</small>
-                    <div className="ck-amount">₹8,400</div>
+                    <div className="ck-amount">₹21,000</div>
                   </div>
                   <span className="ck-tag">SAMPLE DATA</span>
                 </div>
 
                 <div className="ck-stats">
                   <span><b>42</b>deliveries</span>
-                  <span><b>₹200</b>avg. reward</span>
+                  <span><b>₹500</b>avg. reward</span>
                   <span><b>18</b>trips</span>
                 </div>
 
@@ -374,10 +374,10 @@ export default function CarryKartMotionSections() {
                   </g>
 
                   <text className="ck-axis" x="4" y="143">₹0</text>
-                  <text className="ck-axis" x="4" y="113">₹2.5k</text>
-                  <text className="ck-axis" x="4" y="83">₹5k</text>
-                  <text className="ck-axis" x="4" y="53">₹7.5k</text>
-                  <text className="ck-axis" x="4" y="23">₹10k</text>
+                  <text className="ck-axis" x="4" y="113">₹5k</text>
+                  <text className="ck-axis" x="4" y="83">₹10k</text>
+                  <text className="ck-axis" x="4" y="53">₹20k</text>
+                  <text className="ck-axis" x="4" y="23">₹30k</text>
 
                   <text className="ck-axis" x="40" y="162">Day 1</text>
                   <text className="ck-axis" x="205" y="162">Day 15</text>
@@ -408,7 +408,7 @@ export default function CarryKartMotionSections() {
                     className="ck-chart-tooltip-text"
                     textAnchor="middle"
                   >
-                    ₹8,400
+                    ₹21,000
                   </text>
                 </svg>
 

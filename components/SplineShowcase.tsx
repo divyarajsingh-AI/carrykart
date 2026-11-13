@@ -56,19 +56,7 @@ export default function SplineShowcase() {
               </p>
 
               <div className="mt-8 flex flex-wrap gap-3">
-                <a
-                  href="/request"
-                  className="inline-flex items-center justify-center rounded-full bg-violet-300 px-6 py-3 text-sm font-semibold text-[#160D26] transition hover:bg-violet-200"
-                >
-                  Request an item <span className="ml-2">↗</span>
-                </a>
-
-                <a
-                  href="/travel"
-                  className="inline-flex items-center justify-center rounded-full border border-violet-200/20 bg-white/[0.03] px-6 py-3 text-sm font-medium text-violet-100 transition hover:border-violet-300/40 hover:bg-violet-300/[0.08]"
-                >
-                  Share your journey
-                </a>
+                
               </div>
             </div>
 
